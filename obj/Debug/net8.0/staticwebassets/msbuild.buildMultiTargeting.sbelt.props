@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\sbelt.props" />
+</Project>
