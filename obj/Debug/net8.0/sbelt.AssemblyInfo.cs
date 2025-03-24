@@ -16,7 +16,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("sbelt")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+29d35daa2928209da44d4899237422809bc54956")]
 [assembly: System.Reflection.AssemblyProductAttribute("sbelt")]
 [assembly: System.Reflection.AssemblyTitleAttribute("sbelt")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
