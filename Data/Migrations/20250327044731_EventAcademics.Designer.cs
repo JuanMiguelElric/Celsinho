@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using sbelt.Data;
 
@@ -11,9 +12,11 @@ using sbelt.Data;
 namespace sbelt.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250327044731_EventAcademics")]
+    partial class EventAcademics
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,6 +89,11 @@ namespace sbelt.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(21)
+                        .HasColumnType("nvarchar(21)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -137,6 +145,10 @@ namespace sbelt.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasDiscriminator().HasValue("IdentityUser");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -224,6 +236,30 @@ namespace sbelt.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("sbelt.Models.Certificado", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<float?>("Conclusao")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Key")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MatriculaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MatriculaId");
+
+                    b.ToTable("Certificado");
+                });
+
             modelBuilder.Entity("sbelt.Models.EventAcademic", b =>
                 {
                     b.Property<int>("Id")
@@ -242,26 +278,35 @@ namespace sbelt.Data.Migrations
 
             modelBuilder.Entity("sbelt.Models.Matricula", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("EventAcademicId")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("User_id")
                         .HasColumnType("int");
 
-                    b.Property<int>("eventacademicsid")
-                        .HasColumnType("int");
-
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.HasIndex("EventAcademicId");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("Matricula");
+                });
+
+            modelBuilder.Entity("sbelt.Models.ApplicationUser", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -315,6 +360,17 @@ namespace sbelt.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("sbelt.Models.Certificado", b =>
+                {
+                    b.HasOne("sbelt.Models.Matricula", "Matricula")
+                        .WithMany("Certificados")
+                        .HasForeignKey("MatriculaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Matricula");
+                });
+
             modelBuilder.Entity("sbelt.Models.Matricula", b =>
                 {
                     b.HasOne("sbelt.Models.EventAcademic", "EventAcademic")
@@ -323,10 +379,26 @@ namespace sbelt.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("sbelt.Models.ApplicationUser", "User")
+                        .WithMany("Matriculas")
+                        .HasForeignKey("UserId");
+
                     b.Navigation("EventAcademic");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("sbelt.Models.EventAcademic", b =>
+                {
+                    b.Navigation("Matriculas");
+                });
+
+            modelBuilder.Entity("sbelt.Models.Matricula", b =>
+                {
+                    b.Navigation("Certificados");
+                });
+
+            modelBuilder.Entity("sbelt.Models.ApplicationUser", b =>
                 {
                     b.Navigation("Matriculas");
                 });

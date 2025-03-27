@@ -13,6 +13,9 @@ namespace sbelt.Data
         {
         }
         public DbSet<EventAcademic> Eventacademics { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+
+        
 
     }
 }
