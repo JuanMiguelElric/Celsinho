@@ -2,7 +2,41 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container text-center mt-5">
+    <!-- Título principal -->
+    <h1 class="display-4 text-primary font-weight-bold">🎓 Bem-vindo à UniCompetente</h1>
+
+    <p class="lead text-muted">Seu portal para eventos acadêmicos e certificados</p>
+
+    <hr class="my-4" style="border-top: 2px solid #007bff; width: 60%;">
+
+    <!-- Cards para ações -->
+    <div class="row justify-content-center">
+        <!-- Matricular-se em um evento -->
+        <div class="col-md-4">
+            <div class="card shadow-lg border-primary">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">📅 Participar de um Evento</h5>
+                    <p class="card-text">Acesse a lista de eventos disponíveis e matricule-se.</p>
+                    <a href="Matriculas" class="btn btn-outline-primary btn-lg">Matricular-se</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gerar Certificado -->
+        <div class="col-md-4">
+            <div class="card shadow-lg border-success">
+                <div class="card-body">
+                    <h5 class="card-title text-success">📜 Gerar Certificados</h5>
+                    <p class="card-text">Veja e baixe os certificados dos eventos concluídos.</p>
+                    <a href="Certificadoes" class="btn btn-outline-success btn-lg">Ver Certificados</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="mt-5 text-muted">
+        <p>&copy; @DateTime.Now.Year UniConpetente - Todos os direitos reservados.</p>
+    </footer>
 </div>

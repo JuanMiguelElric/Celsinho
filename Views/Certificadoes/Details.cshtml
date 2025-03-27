@@ -1,0 +1,50 @@
+﻿@model sbelt.Models.Certificado
+
+@{
+    ViewData["Title"] = "Certificado";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="certificate border border-dark p-4 text-center shadow-lg" style="border-radius: 15px; background: #f9f9f9;">
+
+                <h2 class="text-uppercase font-weight-bold mb-3" style="color: #2c3e50;">Certificado de Conclusão</h2>
+
+                <p class="lead">Este certificado é concedido a:</p>
+
+                <h3 class="font-weight-bold" style="color: #34495e;">
+                    @Html.DisplayFor(model => model.Matricula.UserId)
+                </h3>
+
+                <p class="lead mt-4">
+                    Por ter concluído com êxito o evento acadêmico:
+                </p>
+
+                <h4 class="font-weight-bold text-primary">
+                    @Html.DisplayFor(model => model.Key)
+                </h4>
+
+                <p class="mt-3">
+                    Com um desempenho de <strong>@Html.DisplayFor(model => model.Conclusao)%</strong>.
+                </p>
+
+                <hr class="my-4 border-dark">
+
+                <div class="d-flex justify-content-between">
+                    <p class="text-muted"><strong>ID do Certificado:</strong> @Html.DisplayFor(model => model.Id)</p>
+                    <p class="text-muted"><strong>Emitido em:</strong> @DateTime.Now.ToShortDateString()</p>
+                </div>
+
+                <button onclick="window.print()" class="btn btn-success mt-3">
+                    🖨 Imprimir Certificado
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center mt-4">
+    <a asp-action="Index" class="btn btn-primary">Voltar para a Lista</a>
+</div>
