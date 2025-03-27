@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -24,8 +25,24 @@ namespace sbelt.Controllers
         // GET: EventAcademics
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Eventacademics.ToListAsync());
+            // Obtendo o UserId do usuário autenticado
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            // Verificando se o UserId não é nulo ou vazio
+            if (string.IsNullOrEmpty(userId))
+            {
+                return RedirectToAction("Login", "Account"); // Redireciona para login se o usuário não estiver autenticado
+            }
+
+            // Filtrando os EventAcademics onde o UserId está associado à tabela Matricula
+            var eventAcademics = await _context.Eventacademics
+                .Where(e => _context.Matriculas
+                    .Any(m => m.EventAcademics_Id == e.Id && m.UserId == userId)) // Filtrando pela associação com o UserId
+                .ToListAsync();
+
+            return View(eventAcademics);
         }
+
 
         // GET: EventAcademics/Details/5
         public async Task<IActionResult> Details(int? id)

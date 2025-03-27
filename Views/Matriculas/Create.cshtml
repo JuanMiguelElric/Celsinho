@@ -15,7 +15,7 @@
 
             <!-- Campo UserId: hidden (não editável pelo usuário) -->
             <div class="form-group">
-                <input asp-for="UserId" type="text" value="@Model.UserId" />
+                <input asp-for="UserId" type="hidden" value="@Model.UserId" />
                 <span asp-validation-for="UserId" class="text-danger"></span>
             </div>
 
