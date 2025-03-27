@@ -15,6 +15,9 @@ namespace sbelt.Data
         public DbSet<EventAcademic> Eventacademics { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
+        public DbSet<Matricula> Matriculas { get; set; }
+        public DbSet<Certificado> Certificado { get; set; }
+
         
 
     }
