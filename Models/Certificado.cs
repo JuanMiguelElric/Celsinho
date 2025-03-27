@@ -16,6 +16,6 @@ namespace sbelt.Models
 
         // Relacionamento com a tabela Matricula
         [ForeignKey("MatriculaId")] // Explicitando o relacionamento com a chave estrangeira
-        public virtual Matricula Matricula { get; set; }
+        public virtual Matricula? Matricula { get; set; }
     }
 }

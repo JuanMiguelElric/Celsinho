@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace sbelt.Models
 {
-    [Table("eventacademics")]  // Mapeando a tabela para 'eventacademics'
+    
     public class EventAcademic
     {
         [Key]  // Definindo a propriedade 'Id' como chave primária
